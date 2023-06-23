@@ -2,6 +2,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "generate": "prisma generate",
     "build": "next build",
     "start": "next start",
     "format": "prettier --write ."
@@ -16,6 +17,7 @@
     "contentlayer": "^0.3.3",
     "date-fns": "^2.29.3",
     "dotenv": "^16.0.3",
+    "encoding": "^0.1.13",
     "framer-motion": "^8.5.4",
     "next": "latest",
     "next-contentlayer": "^0.3.0",
