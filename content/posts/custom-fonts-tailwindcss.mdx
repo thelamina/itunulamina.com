@@ -1,0 +1,149 @@
+---
+title: "Using Custom Fonts In Tailwind CSS"
+publishedAt: "2022-09-08"
+summary: "How you can conveniently use your favourite fonts in your web applications with tailwindcss."
+status: "published"
+---
+
+## What are custom fonts?
+
+> Custom fonts allow you to use a beautiful combination of different fonts on your website to improve typography and user experience.
+
+In this article, I will walk you through how you can conveniently use your favourite fonts in your web applications with tailwindcss.
+
+## Prerequisites
+
+Before you begin this tutorial you'll need the following:
+
+- Code Editor installed
+- Tailwindcss set up
+
+## TTF, OTF, EOT, SVG, WOFF, WOFF2 😢?
+
+If you are getting your fonts from CDN like google fonts or even adobe fonts then font format should really not be your concern.
+
+If you are mostly targeting users with modern browsers, you can use WOFF and WOFF2 formats. These offer the best compression and allow you to deal with fewer files in your code. And if a user’s machine is so old that it doesn’t support either of these formats, it may be better to just serve them a system font as a fallback for performance reasons, anyway.
+If you want to expand support as wide as possible, then add EOT and TTF files to the mix.
+
+This tutorial will use the [Transfonter](https://transfonter.org/), a modern and simple css @font-face generator.
+
+Before you proceed, make sure you have your fonts ready.
+
+<Image
+  alt={`convert.png`}
+  src={`https://cdn.hashnode.com/res/hashnode/image/upload/v1624714619516/sDveo4xsJ.png`}
+  width={1365}
+  height={741}
+/>
+_remember to enable the add local rule_
+
+## Setting up your project
+
+Create a new project with your preferred framework. I will be using Next.js
+
+### Install tailwindcss
+
+```bash
+#npm
+npm install -D tailwindcss@latest postcss@latest autoprefixer@latest
+
+#yarn
+yarn add -D tailwindcss@latest postcss@latest autoprefixer@latest
+```
+
+### Create your configuration files
+
+```bash
+npx tailwindcss init -p
+```
+
+This will create a minimal <code>tailwind.config.js</code> file at the root of your project and It will also create a
+
+<code>postcss.config.js</code> file that includes <code>tailwindcss</code> and <code>
+  autoprefixer
+</code> already configured.
+
+### Include Tailwind in your CSS
+
+In your <code>globals.css</code> file inside the <code>styles</code> directory at the root of your project. Replace the content with the following:
+
+```css title='globals.css'
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+## Installing Your Custom Font
+
+If you are not using fonts from a CDN like [google fonts](https://fonts.google.com/).
+
+Go to [transfonter.org](https://transfonter.org/), click on the **ADD FONTS** button to import your already downloaded fonts.
+
+<Image
+  alt={`convert.png`}
+  src={`https://cdn.hashnode.com/res/hashnode/image/upload/v1624720583641/5q2elnc2E.png`}
+  width={1366}
+  height={736}
+/>
+
+### Choose preferred format(s)
+
+<Image
+  alt={`format.png`}
+  src={`https://cdn.hashnode.com/res/hashnode/image/upload/v1624719750980/AV4ObYNBC.png`}
+  width={1366}
+  height={741}
+/>
+
+Click on the **CONVERT** button afterwards
+
+Extract the downloaded zip file from [Transfonter](https://transfonter.org/), Move all the files into the <code>/public/fonts</code> folder in your project directory.
+
+### Update your <code>globals.css</code>
+
+There should be a <code>stylesheet.css</code> file in the <code>fonts</code> folder in your <code>public</code> directory of your project
+
+```css title='stylesheet.css' {1}
+@import url("/fonts/stylesheet.css");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+If you are using CDN, simply use the import rule like this
+
+```css title='stylesheet.css {1}'
+@import url("https://fonts.googleapis.com/css2?family=Jomhuria&family=Roboto:wght@300;400&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+Finally, extend the fontFamily in the theme in your <code>tailwind.config.js</code> to use the new imported font family, in our case _BR Firma_,
+
+```javascript title="tailwind.config.js" showLineNumbers {10}
+module.exports = {
+  purge: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
+  darkMode: false, // or 'media' or 'class'
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ["BR Firma", "sans-serif"],
+      },
+    },
+  },
+  variants: {
+    extend: {},
+  },
+  plugins: [],
+};
+```
+
+Voila! 😁 We have our custom fonts loaded
+
+Check out the following resource for in-depth understanding.
+
+- [Tailwindcss Documentation](https://tailwindcss.com/docs)
+- [Transfonter guide](https://transfonter.org/formats)

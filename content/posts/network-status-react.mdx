@@ -1,0 +1,108 @@
+---
+title: "Handling Network Status in Your React App"
+summary: How to implement a simple system for indicating the internet/network status in a React app.
+publishedAt: "2023-01-04T10:00"
+status: "published"
+---
+
+> One important aspect of any modern web application is the ability to handle network connectivity issues. Whether it's a temporary loss of connection or the user being in an area with no network coverage, it's crucial for the app to be able to gracefully handle these scenarios and communicate the current network status to the user.
+
+In this article, we'll look at how to implement a simple system for indicating the internet/network status in a React app.
+
+## Handling Network Status Changes
+
+The first step in indicating the network status in our React app is to handle changes in the network status. We can do this using the `navigator.onLine` property, which is a boolean value that indicates whether the browser is currently online or offline.
+
+We can use this property to set the network status in our app's state, and then use it to display an appropriate message to the user.
+
+Here's an example of how to do this using a custom `useNavigatorOnLine` hook:
+
+```jsx showLineNumbers
+import * as React from "react";
+
+const getOnLineStatus = () =>
+  typeof navigator !== "undefined" && typeof navigator.onLine === "boolean"
+    ? navigator.onLine
+    : true;
+
+const useNavigatorOnLine = () => {
+  const [status, setStatus] = React.useState(getOnLineStatus());
+
+  const setOnline = () => setStatus(true);
+  const setOffline = () => setStatus(false);
+
+  React.useEffect(() => {
+    window.addEventListener("online", setOnline);
+    window.addEventListener("offline", setOffline);
+
+    return () => {
+      window.removeEventListener("online", setOnline);
+      window.removeEventListener("offline", setOffline);
+    };
+  }, []);
+
+  return status;
+};
+```
+
+In this example, we use the `useState` hook to create a state variable called `status`, which is initially set to the value of `navigator.onLine`. We then use the `window.addEventListener` function to listen for the `online` and `offline` events, which are fired when the browser goes online or offline respectively. When these events are fired, we update the value of `status` using the `setStatus function.
+
+Finally, we return the value of `status` to display an appropriate message to the user.
+
+## Displaying a Network Status Indicator
+
+Now that we're able to track the network status in our app, the next step is to display an indicator to the user. There are a few different ways we could do this, such as using an icon or a message, but in this example, we'll use a simple message at the top of the screen.
+
+To create the indicator, we can use a component called `NetworkStatusIndicator`, which will display a message at the top of the screen when the browser is offline, and lets you know when the browser is online.
+
+Here's an example of how to create the `NetworkStatusIndicator` component:
+
+```jsx showLineNumbers
+import * as React from "react";
+
+const NetworkStatusIndicator = () => {
+  const { show, close } = useDisplayMessage();
+  const isOnline = useNavigatorOnLine();
+  const firstUpdate = React.useRef(true);
+
+  React.useLayoutEffect(() => {
+    if (firstUpdate.current) {
+      firstUpdate.current = false;
+      return;
+    }
+    isOnline ? show("You are back online!") : show("You are currently offline");
+  }, [close, show, isOnline]);
+
+  return null;
+};
+```
+
+<Callout emoji="✅">
+  `useDisplayMessage` is your custom component for displaying messages
+</Callout>
+
+You can simply import the `NetworkStatusIndicator` at the root of your react project usually the `App.js`
+
+```jsx
+import { NetworkStatusIndicator } from "@/components";
+
+function App() {
+  return (
+    <>
+      <NetworkStatusIndicator />
+      {/* rest of your app */}
+    </>
+  );
+}
+```
+
+Overall, handling network connectivity issues and indicating the network status helps improve the user experience, ensures data consistency, and allows for graceful degradation in the event of a loss of connection.
+
+<Callout emoji="💡">
+  To indicate the network status in a React app, you can use the
+  navigator.onLine property and listen for the online and offline events to
+  update the network status in your app's state. You can then use this
+  information to display an appropriate message or indicator to the user.
+</Callout>
+
+Keep building! 🚀
