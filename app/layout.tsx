@@ -76,7 +76,7 @@ export default function RootLayout({
         dmSans.variable
       )}
     >
-      <body className="flex h-full max-w-4xl flex-col px-4 pt-8 text-neutral-800 antialiased transition-colors dark:text-neutral-200 md:flex-row md:pt-20 lg:mx-auto lg:pt-32">
+      <body className="flex h-full max-w-4xl flex-col bg-transparent px-4 pt-8 text-neutral-800 antialiased transition-colors dark:text-neutral-200 md:flex-row md:pt-20 lg:mx-auto lg:pt-32">
         <div className="fixed left-0 top-0 -z-10 h-screen w-screen bg-gradient-to-b from-white from-0% via-70% to-slate-200 to-100% transition-colors dark:from-[#111010]/90 dark:to-black " />
         <Sidebar />
         <main className="flex min-w-0 flex-auto flex-col px-2 pt-6 md:px-0 md:pt-0">
