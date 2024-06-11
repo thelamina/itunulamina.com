@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { allPosts as posts } from "contentlayer/generated";
-import { ViewCounter } from "./ViewCounter";
+// import { ViewCounter } from "./ViewCounter";
 import { format } from "date-fns";
 import clsx from "clsx";
 import { getPosts } from "@/lib/contentlayer";
@@ -40,8 +40,8 @@ export default async function BlogPage() {
                     <p className="text-xs font-medium">
                       {format(new Date(post.publishedAt), "dd MMM. yyyy")}
                     </p>
-                    <p>|</p>
-                    <ViewCounter slug={post.slug} trackView={false} />
+                    {/* <p>|</p> */}
+                    {/* <ViewCounter slug={post.slug} trackView={false} /> */}
                   </div>
                 </div>
               </Link>

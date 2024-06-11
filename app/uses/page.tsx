@@ -33,8 +33,8 @@ export default function UsesPage() {
         <h3 id="software">Software</h3>
         <ul>
           <li>Spotify</li>
-          <li>Notion</li>
-          <li>Grammarly</li>
+          <li>Google Task</li>
+          <li>Google keep</li>
           <li>Texts</li>
         </ul>
 

@@ -5,20 +5,21 @@ import {
   ArrowIcon,
   GitHubIcon,
   TwitterIcon,
+  LinkedInIcon,
   ViewsIcon,
 } from "components/icons";
-import { name, about, bio, avatar, twitter, github } from "lib/info";
+import { name, about, bio, avatar, twitter, github, linkedin } from "lib/info";
 
 export const revalidate = 60;
 
 export default async function HomePage() {
-  let views;
+  // let views;
 
-  try {
-    [views] = await Promise.all<number>([getBlogViews()]);
-  } catch (error) {
-    console.error(error);
-  }
+  // try {
+  //   [views] = await Promise.all<number>([getBlogViews()]);
+  // } catch (error) {
+  //   console.error(error);
+  // }
 
   return (
     <section>
@@ -52,10 +53,19 @@ export default async function HomePage() {
           >
             <GitHubIcon /> {github}
           </a>
-          <Link href="/blog" className="flex items-center">
-            <ViewsIcon />
+          <a
+            rel="noopener noreferrer"
+            target="_blank"
+            href={`https://www.linkedin.com/in/${linkedin}`}
+            className="flex items-center gap-2"
+          >
+            <LinkedInIcon /> {linkedin}
+          </a>
+          {/* <Link href="/blog" className="flex items-center">
+            <LinkedInIcon />
+
             {`${views || ""} blog views all time`}
-          </Link>
+          </Link> */}
         </div>
       </div>
       <p className="my-5 max-w-[600px] text-neutral-800 dark:text-neutral-200">

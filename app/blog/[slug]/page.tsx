@@ -94,7 +94,7 @@ export default async function BlogPostPage({ params }) {
           {format(new Date(post.publishedAt), "dd-MMM-yyyy")}
         </div>
         <div className="mx-2 h-[0.2em] bg-neutral-50 dark:bg-neutral-800" />
-        <ViewCounter slug={post.slug} trackView />
+        {/* <ViewCounter slug={post.slug} trackView /> */}
       </div>
 
       {post.series && post.series.posts.length > 1 && (

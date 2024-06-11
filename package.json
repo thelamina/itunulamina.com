@@ -8,8 +8,10 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "@libsql/client": "^0.6.2",
     "@octokit/rest": "^19.0.7",
-    "@prisma/client": "4.15.0",
+    "@prisma/adapter-libsql": "^5.15.0",
+    "@prisma/client": "^5.15.0",
     "@vercel/analytics": "^0.1.11",
     "@vercel/edge-config": "^0.1.1",
     "@vercel/og": "^0.0.27",
@@ -21,7 +23,7 @@
     "framer-motion": "^8.5.4",
     "next": "latest",
     "next-contentlayer": "^0.3.0",
-    "prisma": "^4.15.0",
+    "prisma": "^5.15.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-tweet": "^2.0.1",
