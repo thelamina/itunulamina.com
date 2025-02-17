@@ -20,8 +20,8 @@ export const Bio = () => {
     <>
       I'm one who loves the artistic combination of code and design, passionate
       about frontend development and have mentored number of people on React,
-      Next.js, and web development. I'm a builder and a contributor in early
-      stage startups.
+      React, Native Next.js, and web/mobile development. I'm a builder and a
+      contributor in early stage startups.
     </>
   );
 };
