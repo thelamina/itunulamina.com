@@ -87,8 +87,8 @@ export default function ProjectPage() {
         <p>
           These projects highlight my expertise in{" "}
           <b>
-            frontend development, user experience design, and my ability to work
-            collaboratively in diverse teams.
+            frontend and mobile development, user experience design, and my
+            ability to work collaboratively in diverse teams.
           </b>{" "}
         </p>
 
