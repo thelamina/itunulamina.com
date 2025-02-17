@@ -8,24 +8,16 @@ import {
   LinkedInIcon,
   ViewsIcon,
 } from "components/icons";
-import { name, about, bio, avatar, twitter, github, linkedin } from "lib/info";
+import { name, avatar, twitter, github, linkedin, Bio, About } from "lib/info";
 
 export const revalidate = 60;
 
 export default async function HomePage() {
-  // let views;
-
-  // try {
-  //   [views] = await Promise.all<number>([getBlogViews()]);
-  // } catch (error) {
-  //   console.error(error);
-  // }
-
   return (
     <section>
       <h1 className="font-serif text-3xl font-bold">{name}</h1>
       <p className="my-5 max-w-[460px] text-neutral-800 dark:text-neutral-200">
-        {about()}
+        <About />
       </p>
       <div className="my-8 flex flex-col items-start md:flex-row md:items-center">
         <Image
@@ -37,14 +29,6 @@ export default async function HomePage() {
           priority
         />
         <div className="ml-0 mt-8 space-y-2 text-neutral-500 dark:text-neutral-400 md:ml-6 md:mt-0">
-          <a
-            rel="noopener noreferrer"
-            target="_blank"
-            href={`https://twitter.com/${twitter}`}
-            className="flex items-center gap-2"
-          >
-            <TwitterIcon /> {twitter}
-          </a>
           <a
             rel="noopener noreferrer"
             target="_blank"
@@ -61,15 +45,18 @@ export default async function HomePage() {
           >
             <LinkedInIcon /> {linkedin}
           </a>
-          {/* <Link href="/blog" className="flex items-center">
-            <LinkedInIcon />
-
-            {`${views || ""} blog views all time`}
-          </Link> */}
+          <a
+            rel="noopener noreferrer"
+            target="_blank"
+            href={`https://x.com/${twitter}`}
+            className="flex items-center gap-2"
+          >
+            <TwitterIcon /> {twitter}
+          </a>
         </div>
       </div>
       <p className="my-5 max-w-[600px] text-neutral-800 dark:text-neutral-200">
-        {bio()}
+        <Bio />
       </p>
       <ul className="font-sm mt-8 flex flex-col space-x-0 space-y-2 text-neutral-500 dark:text-neutral-400 md:flex-row md:space-x-4 md:space-y-0">
         <li>
@@ -77,10 +64,10 @@ export default async function HomePage() {
             className="flex items-center transition-all hover:text-neutral-700 dark:hover:text-neutral-200"
             rel="noopener noreferrer"
             target="_blank"
-            href={`https://twitter.com/${twitter}`}
+            href={`https://x.com/${twitter}`}
           >
             <ArrowIcon />
-            <p className="">follow me on twitter</p>
+            <p className="">follow me on X</p>
           </a>
         </li>
       </ul>

@@ -6,16 +6,16 @@ export const twitter = "i_thelamina";
 export const linkedin = "thelamina";
 export const github = "thelamina";
 
-export const about = () => {
+export const About = () => {
   return (
     <>
-      Hey, I'm Itunu. I'm a <b>Software Engineer</b> with a strong focus on
-      frontend development and a deep passion for building for the web.
+      Hey, I'm Itunu—a <b>Software Engineer</b> passionate about frontend and
+      mobile development, crafting exceptional web and mobile experiences.
     </>
   );
 };
 
-export const bio = () => {
+export const Bio = () => {
   return (
     <>
       I'm one who loves the artistic combination of code and design, passionate

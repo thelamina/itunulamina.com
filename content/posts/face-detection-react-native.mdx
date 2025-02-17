@@ -1,0 +1,231 @@
+---
+title: "How to Implement Face Detection in React Native Using React Native Vision Camera"
+publishedAt: "2024-04-19"
+summary: "we'll explore how to build a simple face detection app in React Native using React Native Vision Camera."
+status: "published"
+---
+
+Face detection is a technology that allows applications to identify and locate human faces within images or videos. It's widely used in various domains, including security systems, photography apps, and augmented reality experiences.
+In this guide, we'll explore how to build a simple face detection app in React Native using React Native Vision Camera.
+
+**What we'll build:** A basic app that uses your phone's camera to ensure a human face is spotted before capturing.
+
+## Getting Started
+
+Before we begin, you will need to install Node.js (which is included with npm) on your machine. You may verify this by typing node -v and npm -v into your terminal. If nodejs is not already installed, go to [nodejs.org/en/download](https://nodejs.org/en/download).
+
+**Set up React Native:** We won't delve into the details of creating a React Native project here, but if you're new to it, there are plenty of beginner-friendly tutorials available online to help you get started
+
+## Let's Code!
+
+Package Power: First, we need to install the React Native Vision Camera library. Open your terminal in your project directory and type:
+
+```
+npm install react-native-vision-camera@3.7.1
+```
+
+We need frame processors (functions that are written in JavaScript (or TypeScript) which can be used to process frames the camera "sees".) To use the frame processors;
+
+Set up worklet runner
+
+```
+npm install react-native-worklets-core
+```
+
+Add the babel plugin to your babel.config.js:
+
+```js
+module.exports = {
+  plugins: [
+    ["react-native-worklets-core/plugin"],
+    // ...
+  ],
+  // ...
+};
+```
+
+Now, let's import the necessary components in our camera component file and ensure the camera loads.
+
+```tsx
+import React, { useRef, useState } from "react";
+import {
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
+import {
+  useCameraDevice,
+  useCameraPermission,
+  CameraCaptureError,
+  Camera,
+  type VideoFile,
+  type CameraPosition,
+  useFrameProcessor,
+} from "react-native-vision-camera";
+
+function CameraComponent() {
+  const { hasPermission, requestPermission } = useCameraPermission();
+  const device = useCameraDevice("front");
+  const cameraRef = useRef<Camera | null>(null);
+
+  useEffect(() => {
+    (async () => {
+      await requestPermission();
+    })();
+  }, [requestPermission]);
+
+  if (!hasPermission) {
+    // Camera permissions are still loading
+    return (
+      <View style={styles.container}>
+        <ActivityIndicator color="#162D4C" />
+      </View>
+    );
+  }
+
+  if (device == null) {
+    // Camera permissions are not granted yet
+    return (
+      <View style={styles.container}>
+        <Text style={{ textAlign: "center" }}>No camera device found</Text>
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.container}>
+      <Camera
+        video={true}
+        ref={cameraRef}
+        frameProcessor={isRecording ? undefined : frameProcessor}
+        style={StyleSheet.absoluteFill}
+        device={device}
+        isActive={!!device}
+        pixelFormat="yuv"
+      />
+      <View style={styles.bottomBar}>
+        <TouchableOpacity
+          disabled={isRecording}
+          onPress={handleTakeVideo}
+          style={isRecording ? styles.isRecording : styles.shutterButton}
+        />
+      </View>
+    </View>
+  );
+}
+```
+
+Now, let's implement the face detection in our component.
+
+install a frame processor plugin
+
+```
+npm install vision-camera-trustee-face-detector-v3
+```
+
+Update our CameraComponent
+
+```tsx
+import React, { useState } from 'react';
+import {
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
+import {
+  useCameraDevice,
+  useCameraPermission,
+  CameraCaptureError,
+  Camera,
+  type VideoFile,
+  type CameraPosition,
+  useFrameProcessor,
+} from 'react-native-vision-camera';
+import { Worklets } from 'react-native-worklets-core';
+import { scanFaces, type Face } from 'vision-camera-trustee-face-detector-v3';
+
+function CameraComponent() {
+  ...
+
+  const [faces, setFaces] = useState<any>();
+  const [photo, setPhoto] = useState<string>("");
+
+  const handleFaceDetection = Worklets.createRunInJsFn((face) => {
+    setFaces(face);
+  });
+
+  const frameProcessor = useFrameProcessor(
+    (frame) => {
+      'worklet';
+      try {
+        const scannedFaces = scanFaces(frame, {});
+        if (Object.keys(scannedFaces).length > 0) {
+          handleFaceDetection(scannedFaces);
+        }
+      } catch (error) {}
+    },
+    [handleFaceDetection]
+  );
+
+  async function handleTakePicture(){
+    if (cameraRef.current) {
+      setFaces(undefined);
+      if(faces){
+        const shot = await cameraRef.current.takePhoto({});
+        setPhoto(`file://${shot.path}`);
+        setFaces(undefined);
+      } else {
+        Alert.alert('Please position your face in the frame and try again')
+      }
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <Camera
+        video={true}
+        ref={cameraRef}
+        frameProcessor={frameProcessor}
+        style={StyleSheet.absoluteFill}
+        device={device}
+        isActive={!!device}
+        pixelFormat="yuv"
+      />
+      <View style={styles.bottomBar}>
+        <TouchableOpacity
+          disabled={isRecording}
+          onPress={handleTakePicture}
+          style={styles.shutterButton}
+        />
+      </View>
+    </View>
+  );
+}
+```
+
+You can go ahead to setup the preview using the source `photo`!
+
+> [complete code here](https://gist.github.com/thelamina/98ca78261f4001ffc7a339cd71541e3c)
+
+## Running the App!
+
+1. Connect your device using a USB cable or a wireless connection (consult the React Native documentation for specifics).
+2. In your terminal, run npx react-native run-android or npx react-native run-ios depending on your device.
+
+Now, open the app on your device and point the camera at yourself. If everything works correctly, you should see the camera preview and the `"Please position your face in the frame and try again"` message whenever your face is not detected!
+
+This guide breaks down the process of implementing face detection in React Native step by step, from setting up the project to testing the app. It includes code snippets and explanations tailored for beginners to grasp the concept easily.
+
+> Note that in the case of video, set the `frameProcessor` prop to `undefined` after you've started recording if you don't need to use the frameProcessor during recording
+
+### Sources
+
+- React Native Documentation: [reactnative.dev/docs](https://reactnative.dev/docs/getting-started)
+- React Native Vision Camera: [react-native-vision-camera.com](https://react-native-vision-camera.com/docs/guides)
+- Face Detection Plugin: [vision-camera-trustee-face-detector-v3](https://github.com/trustee-wallet/vision-camera-trustee-face-detector-v3)
