@@ -19,7 +19,7 @@ export default function UsesPage() {
           or rapid expansion; instead, it was a year of finally learning how to
           be whole. The highlight of my world has been falling in love with my
           girlfriend over and over again. Even as we approach our first
-          anniversary, every day carries that "Day 1" spark—a rare, sweet magic
+          anniversary, every day carries that "Day 1" spark, that rare, sweet magic
           that makes the long-term feel like a brand-new beginning.
         </p>
 
@@ -41,7 +41,7 @@ export default function UsesPage() {
           more present, and for the first time in a long while, I lived my life.
           I felt the true weight of my friendships and leaned into the warmth of
           connection, realizing that you can only truly feel friendship when you
-          stop rushing past it. I had my relapses—moments where the old shadows
+          stop rushing past it. I had my relapses moments where the old shadows
           tried to return but they were just reminders of how far the light has
           actually reached.
         </p>
