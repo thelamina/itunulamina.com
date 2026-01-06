@@ -1,0 +1,83 @@
+/* MDX Content Styles */
+
+/* Remove backtick quotes from inline code only (not code blocks) */
+.prose :not(pre) > code::before,
+.prose :not(pre) > code::after {
+	content: none !important;
+}
+
+/* Rehype Pretty Code Styles */
+[data-rehype-pretty-code-figure] {
+	position: relative;
+	margin: 1.5rem 0;
+}
+
+[data-rehype-pretty-code-figure] pre {
+	overflow-x: auto;
+	border-radius: var(--radius-lg);
+	border: none;
+	padding: 1rem;
+	background-color: #011627; /* night-owl background */
+}
+
+/* Copy button for rehype-pretty-code blocks */
+[data-rehype-pretty-code-figure]:hover .copy-button {
+	opacity: 1;
+}
+
+[data-rehype-pretty-code-figure] code,
+pre > code {
+	display: grid;
+	font-family: var(--font-fira-code), 'Fira Code', ui-monospace,
+		SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+	font-size: 0.85rem;
+	line-height: 1.6;
+	counter-reset: line;
+	font-feature-settings: 'liga' 1, 'calt' 1; /* Enable ligatures */
+	/* Reset inline code styles */
+	border: none !important;
+	background: transparent !important;
+	padding: 0 !important;
+	border-radius: 0 !important;
+	color: inherit !important;
+}
+
+[data-rehype-pretty-code-figure] [data-line] {
+	padding: 0 1rem;
+	margin: 0 -1rem;
+}
+
+[data-rehype-pretty-code-figure] [data-highlighted-line] {
+	background-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-rehype-pretty-code-figure] [data-highlighted-chars] {
+	background-color: rgba(255, 255, 255, 0.15);
+	border-radius: 0.25rem;
+	padding: 0.125rem 0.25rem;
+}
+
+/* Anchor link styles */
+.anchor {
+	opacity: 0;
+	margin-left: 0.5rem;
+	text-decoration: none;
+	transition: opacity 0.2s;
+}
+
+/* .anchor::before {
+	content: '#';
+} */
+
+h1:hover .anchor,
+h2:hover .anchor,
+h3:hover .anchor,
+h4:hover .anchor,
+h5:hover .anchor,
+h6:hover .anchor {
+	opacity: 0.5;
+}
+
+.anchor:hover {
+	opacity: 1 !important;
+}
