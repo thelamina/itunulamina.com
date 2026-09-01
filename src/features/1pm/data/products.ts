@@ -2,6 +2,18 @@ import type { Product } from '../types';
 
 export const products: Product[] = [
 	{
+		name: 'Xova',
+		description:
+			'Android streaming app for movies, TV shows, and anime. Built with Kotlin + Jetpack Compose, runs on phones and Android TV.',
+		status: 'Building',
+		url: '#',
+		date: '2025-08-31',
+		tags: ['Android', 'Kotlin', 'Compose', 'Media3'],
+		icon: '🎬',
+		gradient: 'from-red-500/20 via-orange-500/10 to-transparent',
+		downloadUrl: '/downloads/xova.apk',
+	},
+	{
 		name: 'TaxLemon',
 		description:
 			'Authoritative tax determination system. Calculates which taxes apply, how much is payable, and why — all traceable to law.',
