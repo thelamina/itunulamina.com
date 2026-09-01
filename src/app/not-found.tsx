@@ -8,7 +8,7 @@ export default function NotFound() {
         Page not found
       </h2>
       <p className="text-neutral-500 dark:text-neutral-400 mb-8 text-center max-w-md">
-        The page you're looking for doesn't exist or has been moved.
+        The page you&apos;re looking for doesn&apos;t exist or has been moved.
       </p>
       <Link
         href="/"
@@ -19,4 +19,3 @@ export default function NotFound() {
     </section>
   );
 }
-

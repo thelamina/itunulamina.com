@@ -1,19 +1,21 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { cn } from '~/utils';
 
 interface CopyButtonProps {
-	text: string;
 	className?: string;
 }
 
-export function CopyButton({ text, className }: CopyButtonProps) {
+export function CopyButton({ className }: CopyButtonProps) {
 	const [copied, setCopied] = useState(false);
+	const textRef = useRef<HTMLSpanElement>(null);
 
 	const handleCopy = async () => {
 		try {
-			await navigator.clipboard.writeText(text);
+			const codeElement = textRef.current?.parentElement?.querySelector('pre code');
+			const source = codeElement?.textContent || '';
+			await navigator.clipboard.writeText(source);
 			setCopied(true);
 			setTimeout(() => setCopied(false), 2000);
 		} catch (err) {
@@ -22,7 +24,9 @@ export function CopyButton({ text, className }: CopyButtonProps) {
 	};
 
 	return (
-		<button
+		<>
+			<span ref={textRef} className='hidden' aria-hidden='true' />
+			<button
 			onClick={handleCopy}
 			className={cn(
 				'absolute right-3 top-3 rounded-md p-2 transition-all',
@@ -62,7 +66,8 @@ export function CopyButton({ text, className }: CopyButtonProps) {
 					<path d='M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2' />
 				</svg>
 			)}
-		</button>
+			</button>
+		</>
 	);
 }
 

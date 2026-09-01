@@ -11,7 +11,7 @@ export const products: Product[] = [
 		tags: ['Android', 'Kotlin', 'Compose', 'Media3'],
 		icon: '🎬',
 		gradient: 'from-red-500/20 via-orange-500/10 to-transparent',
-		downloadUrl: '/downloads/xova.apk',
+		downloadUrl: '/downloads/xova-release.apk',
 	},
 	{
 		name: 'TaxLemon',
